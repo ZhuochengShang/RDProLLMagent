@@ -1,0 +1,23 @@
+# ---- notebooks ----
+**/.ipynb_checkpoints/
+notebook/.ipynb_checkpoints/
+notebook/.ipynb_checkpoints copy/
+
+# ---- runs / outputs ----
+notebook/runs*/
+notebook/runs copy/
+notebook/runs copy/**
+
+# ---- ivy / scala caches (often appear under runs) ----
+**/.ivy2/
+**/ivydata-*.properties
+**/ivy-*.xml
+**/ivy-*.xml.original
+**/ivy-report.*
+**/*.jar
+
+# ---- general generated ----
+*.properties
+
+# ---- local data ----
+data/
