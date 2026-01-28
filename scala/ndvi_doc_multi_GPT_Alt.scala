@@ -1,105 +1,89 @@
-import java.net.URI
-import java.nio.file.{Paths, Path}
-
 import org.apache.spark.SparkContext
 import edu.ucr.cs.bdlab.beast._
 import edu.ucr.cs.bdlab.raptor.GeoTiffWriter
 import edu.ucr.cs.bdlab.beast.io.tiff.TiffConstants
+import java.net.URI
+import java.nio.file.Paths
 
-object ComputeNDVI {
+object NDVI {
   def run(sc: SparkContext): Unit = {
-    // Defaults from the provided Python script
-    val defaultRedPath =
-      "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B4/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B4.TIF"
-    val defaultNirPath =
-      "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B5/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B5.TIF"
-    val defaultOutPath =
-      "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif"
+    // Defaults derived from the original Python
+    val defaultB4 = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B4/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B4.TIF"
+    val defaultB5 = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B5/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B5.TIF"
+    val defaultOut = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif"
 
-    // Read paths from Spark configuration with safe defaults
-    val redPathInRaw  = sc.getConf.get("rdpro.ndvi.red", defaultRedPath)
-    val nirPathInRaw  = sc.getConf.get("rdpro.ndvi.nir", defaultNirPath)
-    val outPathRaw    = sc.getConf.get("rdpro.ndvi.out", defaultOutPath)
+    // Normalize I/O paths according to Spark deployment mode and URI schemes
+    val b4Path = normalizePath(sc, defaultB4)
+    val b5Path = normalizePath(sc, defaultB5)
+    val outPath = normalizePath(sc, defaultOut)
 
-    // Normalize paths according to the required rules
-    val redPath = normalizePath(redPathInRaw, sc)
-    val nirPath = normalizePath(nirPathInRaw, sc)
-    val outPath = normalizePath(outPathRaw, sc)
+    // Load rasters as Float
+    val red: RasterRDD[Float] = sc.geoTiff[Float](b4Path)
+    val nir: RasterRDD[Float] = sc.geoTiff[Float](b5Path)
 
-    // Load rasters (assume integer reflectance inputs)
-    val red: RasterRDD[Int] = sc.geoTiff[Int](redPath)
-    val nir: RasterRDD[Int] = sc.geoTiff[Int](nirPath)
+    // Stack bands (red first, then NIR); overlay requires matching CRS/resolution/tile size
+    val stacked: RasterRDD[Array[Float]] = red.overlay(nir)
 
-    // Stack bands: [red, nir]
-    val stacked: RasterRDD[Array[Int]] = red.overlay(nir)
-
-    // Compute NDVI = (NIR - RED) / (NIR + RED); guard denom == 0
-    val ndvi: RasterRDD[Float] = stacked.mapPixels((px: Array[Int]) => {
-      val r: Float = px(0).toFloat
-      val n: Float = px(1).toFloat
+    // Compute NDVI with denominator protection; output sentinel -9999.0f on denom == 0
+    val ndvi: RasterRDD[Float] = stacked.mapPixels((px: Array[Float]) => {
+      val r: Float = px(0)
+      val n: Float = px(1)
       val denom: Float = n + r
-      val out: Float = if (denom == 0.0f) -9999.0f else (n - r) / denom
-      out
+      if (denom == 0.0f) -9999.0f
+      else (n - r) / denom
     })
 
-    // Save output GeoTIFF (single-file compatibility mode + LZW compression)
+    // Write output GeoTIFF (directory path). Use LZW compression; compatibility mode writes a single GeoTIFF.
     ndvi.saveAsGeoTiff(
       outPath,
       Seq(
         GeoTiffWriter.Compression -> TiffConstants.COMPRESSION_LZW,
-        GeoTiffWriter.WriteMode   -> "compatibility"
+        GeoTiffWriter.WriteMode -> "compatibility"
       )
     )
-
-    println(s"NDVI written to: $outPath")
   }
 
-  private def hasScheme(p: String): Boolean = {
-    try {
-      val u = new URI(p)
-      u.getScheme != null
-    } catch {
-      case _: Throwable => false
-    }
-  }
-
-  // Filesystem & path normalization as mandated
-  private def normalizePath(p: String, sc: SparkContext): String = {
-    if (hasScheme(p)) {
-      p
-    } else {
-      val isLocal = sc.master != null && sc.master.toLowerCase.startsWith("local")
-      val path: Path = Paths.get(p)
-      if (isLocal && path.isAbsolute) {
-        path.toAbsolutePath.toUri.toString
-      } else {
-        // Leave as-is for cluster filesystems (or relative paths in local mode)
-        p
+  private def normalizePath(sc: SparkContext, rawPath: String): String = {
+    def hasScheme(p: String): Boolean = {
+      try {
+        val u = new URI(p)
+        u.getScheme != null
+      } catch {
+        case _: Throwable => false
       }
+    }
+    def isWindowsAbs(p: String): Boolean = p.matches("^[a-zA-Z]:\\\\.*")
+    def isUnixAbs(p: String): Boolean = p.startsWith("/")
+    val isLocal = Option(sc.master).exists(_.toLowerCase.startsWith("local"))
+
+    if (hasScheme(rawPath)) {
+      rawPath
+    } else if (isLocal && (isUnixAbs(rawPath) || isWindowsAbs(rawPath))) {
+      Paths.get(rawPath).toAbsolutePath.normalize().toUri.toString
+    } else {
+      rawPath
     }
   }
 }
 
-// NOTES
-// (a) RDPro APIs used:
-// - sc.geoTiff
-// - overlay
-// - mapPixels
-// - saveAsGeoTiff
-// - GeoTiffWriter (Compression, WriteMode)
-// - TiffConstants (COMPRESSION_LZW)
+// NOTES:
+// - RDPro APIs used: sc.geoTiff[T], overlay, mapPixels, saveAsGeoTiff
+// - Unsupported operations and why:
+//   * Explicit grid alignment check (GeoTransform/CRS comparison) is not exposed in provided APIs.
+//     overlay requires matching CRS/resolution/tile size; if they differ, it should fail. No direct
+//     pre-check API in given docs, so this code relies on overlay semantics.
+//   * Reading input NoData values and masking accordingly: no API provided in the docs to read band
+//     NoData or to set output NoData metadata. The code only guards against zero denominator and uses
+//     a sentinel -9999.0f in pixel values; it does not set a NoData tag in the output dataset.
+// - Assumptions:
+//   * The first argument to overlay is band 0 (red), second is band 1 (NIR).
+//   * Input rasters are aligned; otherwise overlay will error.
+//   * Output path is treated as a directory (Spark semantics); "compatibility" mode writes a single
+//     GeoTIFF inside that directory.
+//   * Path normalization conforms to rules: preserve given scheme; in local mode, absolute local
+//     paths without scheme are converted to file:/// URIs; in cluster mode, scheme-less paths are
+//     left to resolve via cluster fs.defaultFS.
 
-// (b) Unsupported operations and why:
-// - Explicit grid alignment check (geotransform/projection comparison) is not implemented because no API for reading RasterMetadata fields is provided in the DOC CHUNKS. The overlay operation requires compatible rasters; mismatches will surface at execution.
-// - Input NoData handling (reading band-level NoData and masking) is not implemented because the DOC CHUNKS do not expose APIs to read NoData values or apply masks. The code only guards division by zero and emits -9999.0f; it does not set an output NoData tag since no such writer option is documented.
-// - Reprojection/warping is not performed; if inputs are misaligned, users should preprocess accordingly.
-
-// (c) Assumptions about IO paths / bands / nodata / CRS / environment detection logic:
-// - Inputs are single-band reflectance rasters where red is B4 and nir is B5; both are loaded as Int and computed as Float NDVI.
-// - Rasters share CRS, resolution, and tiling so overlay succeeds; otherwise, the job may fail during execution.
-// - Output is a single GeoTIFF (compatibility mode) compressed with LZW. No explicit NoData tag is set in the output.
-// - Path normalization: if sc.master starts with "local" and a path is absolute without a scheme, it is converted to a file:/// URI; otherwise, scheme-less paths are left unchanged to resolve via the cluster filesystem (fs.defaultFS).
-
-val _r = ComputeNDVI.run(sc)
+val _r = NDVI.run(sc)
 println("__DONE__")
 System.exit(0)

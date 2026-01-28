@@ -1,16 +1,16 @@
-26/01/27 22:50:33 WARN Utils: Your hostname, Clockoranges-MacBook-Air.local resolves to a loopback address: 127.0.0.1; using 192.168.68.61 instead (on interface en0)
-26/01/27 22:50:33 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/01/28 09:26:34 WARN Utils: Your hostname, Clockoranges-MacBook-Air.local resolves to a loopback address: 127.0.0.1; using 192.168.68.61 instead (on interface en0)
+26/01/28 09:26:34 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
 :: loading settings :: url = jar:file:/Users/clockorangezoe/Documents/EnvUtilities/spark-3.3.1-bin-hadoop3/jars/ivy-2.5.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
-26/01/27 22:50:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/01/28 09:26:35 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 Spark context Web UI available at http://192.168.68.61:4040
-Spark context available as 'sc' (master = local[*], app id = local-1769583037203).
+Spark context available as 'sc' (master = local[*], app id = local-1769621199007).
 Spark session available as 'spark'.
-CodeCache: size=131072Kb used=46063Kb max_used=46063Kb free=85008Kb
- bounds [0x000000010287c000, 0x00000001055ac000, 0x000000010a87c000]
- total_blobs=13697 nmethods=12745 adapters=859
+CodeCache: size=131072Kb used=46573Kb max_used=46582Kb free=84498Kb
+ bounds [0x0000000106be4000, 0x0000000109994000, 0x000000010ebe4000]
+ total_blobs=13788 nmethods=12838 adapters=859
  compilation: disabled (not enough contiguous free space left)
-26/01/27 22:50:42 ERROR Executor: Exception in task 0.0 in stage 6.0 (TID 30)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
+26/01/28 09:26:44 ERROR Executor: Exception in task 6.0 in stage 6.0 (TID 36)
+org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
@@ -25,8 +25,8 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/27 22:50:42 ERROR Executor: Exception in task 1.0 in stage 6.0 (TID 31)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
+26/01/28 09:26:44 ERROR Executor: Exception in task 0.0 in stage 6.0 (TID 30)
+org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
@@ -41,8 +41,8 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/27 22:50:42 ERROR Executor: Exception in task 5.0 in stage 6.0 (TID 35)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
+26/01/28 09:26:44 ERROR Executor: Exception in task 3.0 in stage 6.0 (TID 33)
+org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
@@ -57,8 +57,8 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/27 22:50:42 ERROR Executor: Exception in task 6.0 in stage 6.0 (TID 36)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
+26/01/28 09:26:44 ERROR Executor: Exception in task 5.0 in stage 6.0 (TID 35)
+org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
@@ -73,8 +73,8 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/27 22:50:42 ERROR Executor: Exception in task 3.0 in stage 6.0 (TID 33)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
+26/01/28 09:26:44 ERROR Executor: Exception in task 4.0 in stage 6.0 (TID 34)
+org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
@@ -89,55 +89,7 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/27 22:50:42 ERROR Executor: Exception in task 2.0 in stage 6.0 (TID 32)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/27 22:50:42 ERROR Executor: Exception in task 7.0 in stage 6.0 (TID 37)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/27 22:50:42 ERROR Executor: Exception in task 4.0 in stage 6.0 (TID 34)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/27 22:50:42 WARN TaskSetManager: Lost task 6.0 in stage 6.0 (TID 36) (192.168.68.61 executor driver): org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
+26/01/28 09:26:44 WARN TaskSetManager: Lost task 4.0 in stage 6.0 (TID 34) (192.168.68.61 executor driver): org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
@@ -153,10 +105,28 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
 
-26/01/27 22:50:42 ERROR TaskSetManager: Task 6 in stage 6.0 failed 1 times; aborting job
-26/01/27 22:50:42 WARN TaskSetManager: Lost task 9.0 in stage 6.0 (TID 39) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
-26/01/27 22:50:42 WARN TaskSetManager: Lost task 8.0 in stage 6.0 (TID 38) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
-org.apache.spark.SparkException: Job aborted due to stage failure: Task 6 in stage 6.0 failed 1 times, most recent failure: Lost task 6.0 in stage 6.0 (TID 36) (192.168.68.61 executor driver): org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
+26/01/28 09:26:44 ERROR TaskSetManager: Task 4 in stage 6.0 failed 1 times; aborting job
+26/01/28 09:26:44 ERROR Executor: Exception in task 7.0 in stage 6.0 (TID 37)
+org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
+	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
+	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
+	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
+	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
+	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
+	at org.apache.spark.scheduler.Task.run(Task.scala:136)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+26/01/28 09:26:44 WARN TaskSetManager: Lost task 8.0 in stage 6.0 (TID 38) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
+26/01/28 09:26:44 WARN TaskSetManager: Lost task 9.0 in stage 6.0 (TID 39) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
+26/01/28 09:26:44 WARN TaskSetManager: Lost task 2.0 in stage 6.0 (TID 32) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
+26/01/28 09:26:44 WARN TaskSetManager: Lost task 1.0 in stage 6.0 (TID 31) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
+org.apache.spark.SparkException: Job aborted due to stage failure: Task 4 in stage 6.0 failed 1 times, most recent failure: Lost task 4.0 in stage 6.0 (TID 34) (192.168.68.61 executor driver): org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
 	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
@@ -195,9 +165,10 @@ Driver stacktrace:
   at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.saveAsGeoTiffCompatibilityMode(GeoTiffWriter.scala:306)
   at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.saveAsGeoTiff(GeoTiffWriter.scala:544)
   at edu.ucr.cs.bdlab.raptor.RaptorMixin$RaptorMixinOperations3.saveAsGeoTiff(RaptorMixin.scala:114)
-  at NDVICalculation$.run(runs/ndvi_eval/ndvi_doc_multi_GPT_2.scala:88)
+  at ComputeNdvi$.run(runs/ndvi_eval/ndvi_doc_multi_GPT_2.scala:81)
+  at ComputeNdvi$.run(runs/ndvi_eval/ndvi_doc_multi_GPT_2.scala:31)
   ... 60 elided
-Caused by: org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py
+Caused by: org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
   at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
   at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
   at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
@@ -242,7 +213,7 @@ org.geotools#gt-epsg-hsql added as a dependency
 org.geotools#gt-geotiff added as a dependency
 org.geotools#gt-coverage added as a dependency
 it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
-:: resolving dependencies :: org.apache.spark#spark-submit-parent-2a5a7c96-df0f-4a4e-beea-3cedf35d10c5;1.0
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-8a29961f-6b08-441b-b082-681065159097;1.0
 	confs: [default]
 	found org.locationtech.jts#jts-core;1.19.0 in local-m2-cache
 	found org.geotools#gt-referencing;24.1 in repo-1
@@ -331,7 +302,7 @@ it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
 	found org.jvnet.staxex#stax-ex;1.8 in local-m2-cache
 	found com.sun.xml.fastinfoset#FastInfoset;1.2.15 in local-m2-cache
 	found io.airlift#aircompressor;0.27 in local-m2-cache
-:: resolution report :: resolve 624ms :: artifacts dl 16ms
+:: resolution report :: resolve 725ms :: artifacts dl 18ms
 	:: modules in use:
 	com.fasterxml.jackson.core#jackson-core;2.10.1 from central in [default]
 	com.google.code.findbugs#jsr305;3.0.2 from local-m2-cache in [default]
@@ -429,9 +400,9 @@ it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
 	---------------------------------------------------------------------
 	|      default     |   89  |   0   |   0   |   2   ||   87  |   0   |
 	---------------------------------------------------------------------
-:: retrieving :: org.apache.spark#spark-submit-parent-2a5a7c96-df0f-4a4e-beea-3cedf35d10c5
+:: retrieving :: org.apache.spark#spark-submit-parent-8a29961f-6b08-441b-b082-681065159097
 	confs: [default]
-	0 artifacts copied, 87 already retrieved (0kB/13ms)
+	0 artifacts copied, 87 already retrieved (0kB/18ms)
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
 
