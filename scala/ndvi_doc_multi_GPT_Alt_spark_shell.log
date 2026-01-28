@@ -1,22 +1,36 @@
-26/01/28 09:32:11 WARN Utils: Your hostname, Clockoranges-MacBook-Air.local resolves to a loopback address: 127.0.0.1; using 192.168.68.61 instead (on interface en0)
-26/01/28 09:32:11 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/01/28 09:34:34 WARN Utils: Your hostname, Clockoranges-MacBook-Air.local resolves to a loopback address: 127.0.0.1; using 192.168.68.61 instead (on interface en0)
+26/01/28 09:34:34 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
 :: loading settings :: url = jar:file:/Users/clockorangezoe/Documents/EnvUtilities/spark-3.3.1-bin-hadoop3/jars/ivy-2.5.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
-26/01/28 09:32:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/01/28 09:34:35 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 Spark context Web UI available at http://192.168.68.61:4040
-Spark context available as 'sc' (master = local[*], app id = local-1769621536308).
+Spark context available as 'sc' (master = local[*], app id = local-1769621678999).
 Spark session available as 'spark'.
-CodeCache: size=131072Kb used=45067Kb max_used=45077Kb free=86004Kb
- bounds [0x00000001047f8000, 0x0000000107438000, 0x000000010c7f8000]
- total_blobs=13401 nmethods=12462 adapters=848
+CodeCache: size=131072Kb used=44668Kb max_used=44668Kb free=86403Kb
+ bounds [0x0000000105f04000, 0x0000000108ad4000, 0x000000010df04000]
+ total_blobs=13452 nmethods=12514 adapters=848
  compilation: disabled (not enough contiguous free space left)
-26/01/28 09:32:21 ERROR Executor: Exception in task 4.0 in stage 2.0 (TID 24)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+26/01/28 09:34:44 ERROR Executor: Exception in task 4.0 in stage 2.0 (TID 24)
+java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+	at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+	at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+	at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
 	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
 	at org.apache.spark.scheduler.Task.run(Task.scala:136)
 	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -25,14 +39,28 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:32:21 ERROR Executor: Exception in task 5.0 in stage 2.0 (TID 25)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+26/01/28 09:34:44 ERROR Executor: Exception in task 2.0 in stage 2.0 (TID 22)
+java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+	at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+	at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+	at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
 	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
 	at org.apache.spark.scheduler.Task.run(Task.scala:136)
 	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -41,14 +69,28 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:32:21 ERROR Executor: Exception in task 2.0 in stage 2.0 (TID 22)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+26/01/28 09:34:44 ERROR Executor: Exception in task 7.0 in stage 2.0 (TID 27)
+java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+	at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+	at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+	at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
 	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
 	at org.apache.spark.scheduler.Task.run(Task.scala:136)
 	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -57,14 +99,28 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:32:21 ERROR Executor: Exception in task 3.0 in stage 2.0 (TID 23)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+26/01/28 09:34:44 ERROR Executor: Exception in task 0.0 in stage 2.0 (TID 20)
+java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+	at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+	at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+	at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
 	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
 	at org.apache.spark.scheduler.Task.run(Task.scala:136)
 	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -73,14 +129,28 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:32:21 ERROR Executor: Exception in task 6.0 in stage 2.0 (TID 26)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+26/01/28 09:34:44 ERROR Executor: Exception in task 1.0 in stage 2.0 (TID 21)
+java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+	at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+	at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+	at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
 	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
 	at org.apache.spark.scheduler.Task.run(Task.scala:136)
 	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -89,14 +159,28 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:32:21 ERROR Executor: Exception in task 0.0 in stage 2.0 (TID 20)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+26/01/28 09:34:44 ERROR Executor: Exception in task 6.0 in stage 2.0 (TID 26)
+java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+	at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+	at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+	at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
 	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
 	at org.apache.spark.scheduler.Task.run(Task.scala:136)
 	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -105,45 +189,27 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:32:21 ERROR Executor: Exception in task 7.0 in stage 2.0 (TID 27)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:32:21 ERROR Executor: Exception in task 1.0 in stage 2.0 (TID 21)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:32:21 WARN TaskSetManager: Lost task 0.0 in stage 2.0 (TID 20) (192.168.68.61 executor driver): org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+26/01/28 09:34:44 WARN TaskSetManager: Lost task 4.0 in stage 2.0 (TID 24) (192.168.68.61 executor driver): java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+	at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+	at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+	at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
 	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
 	at org.apache.spark.scheduler.Task.run(Task.scala:136)
 	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -153,16 +219,32 @@ org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:750)
 
-26/01/28 09:32:21 ERROR TaskSetManager: Task 0 in stage 2.0 failed 1 times; aborting job
-26/01/28 09:32:21 WARN TaskSetManager: Lost task 8.0 in stage 2.0 (TID 28) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
-26/01/28 09:32:21 WARN TaskSetManager: Lost task 9.0 in stage 2.0 (TID 29) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
-org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 2.0 failed 1 times, most recent failure: Lost task 0.0 in stage 2.0 (TID 20) (192.168.68.61 executor driver): org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+26/01/28 09:34:44 ERROR TaskSetManager: Task 4 in stage 2.0 failed 1 times; aborting job
+26/01/28 09:34:44 WARN TaskSetManager: Lost task 9.0 in stage 2.0 (TID 29) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
+26/01/28 09:34:44 WARN TaskSetManager: Lost task 8.0 in stage 2.0 (TID 28) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
+26/01/28 09:34:44 WARN TaskSetManager: Lost task 5.0 in stage 2.0 (TID 25) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
+26/01/28 09:34:44 WARN TaskSetManager: Lost task 3.0 in stage 2.0 (TID 23) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
+org.apache.spark.SparkException: Job aborted due to stage failure: Task 4 in stage 2.0 failed 1 times, most recent failure: Lost task 4.0 in stage 2.0 (TID 24) (192.168.68.61 executor driver): java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+	at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+	at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+	at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+	at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+	at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+	at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+	at scala.collection.Iterator.foreach(Iterator.scala:943)
+	at scala.collection.Iterator.foreach$(Iterator.scala:943)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
 	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
 	at org.apache.spark.scheduler.Task.run(Task.scala:136)
 	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -197,13 +279,27 @@ Driver stacktrace:
   at edu.ucr.cs.bdlab.raptor.RaptorMixin$RaptorMixinOperations3.saveAsGeoTiff(RaptorMixin.scala:114)
   at NDVI$.run(runs/ndvi_eval/ndvi_doc_multi_GPT_Alt.scala:61)
   ... 60 elided
-Caused by: org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-  at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-  at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-  at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-  at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-  at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
+Caused by: java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.Float
+  at scala.runtime.BoxesRunTime.unboxToFloat(BoxesRunTime.java:111)
+  at scala.runtime.ScalaRunTime$.array_update(ScalaRunTime.scala:78)
+  at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1(StackedTile.scala:49)
+  at edu.ucr.cs.bdlab.raptor.StackedTile.$anonfun$getPixelValue$1$adapted(StackedTile.scala:42)
+  at scala.collection.IndexedSeqOptimized.foreach(IndexedSeqOptimized.scala:36)
+  at scala.collection.IndexedSeqOptimized.foreach$(IndexedSeqOptimized.scala:33)
+  at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:38)
+  at edu.ucr.cs.bdlab.raptor.StackedTile.getPixelValue(StackedTile.scala:42)
+  at edu.ucr.cs.bdlab.raptor.MapPixelsTile.getPixelValue(MapPixelsTile.scala:43)
+  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$2(GeoTiffWriter.scala:157)
+  at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.$anonfun$write$1(GeoTiffWriter.scala:148)
+  at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:158)
+  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter.write(GeoTiffWriter.scala:148)
+  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6(GeoTiffWriter.scala:357)
+  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$6$adapted(GeoTiffWriter.scala:347)
+  at scala.collection.Iterator.foreach(Iterator.scala:943)
+  at scala.collection.Iterator.foreach$(Iterator.scala:943)
+  at scala.collection.AbstractIterator.foreach(Iterator.scala:1431)
+  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:347)
   at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
   at org.apache.spark.scheduler.Task.run(Task.scala:136)
   at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
@@ -242,7 +338,7 @@ org.geotools#gt-epsg-hsql added as a dependency
 org.geotools#gt-geotiff added as a dependency
 org.geotools#gt-coverage added as a dependency
 it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
-:: resolving dependencies :: org.apache.spark#spark-submit-parent-1c4d101a-3e82-47fc-9b5e-18fccd5a8c2b;1.0
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-4adafba3-f989-42a2-824c-11936cba3cce;1.0
 	confs: [default]
 	found org.locationtech.jts#jts-core;1.19.0 in local-m2-cache
 	found org.geotools#gt-referencing;24.1 in repo-1
@@ -331,7 +427,7 @@ it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
 	found org.jvnet.staxex#stax-ex;1.8 in local-m2-cache
 	found com.sun.xml.fastinfoset#FastInfoset;1.2.15 in local-m2-cache
 	found io.airlift#aircompressor;0.27 in local-m2-cache
-:: resolution report :: resolve 711ms :: artifacts dl 16ms
+:: resolution report :: resolve 667ms :: artifacts dl 14ms
 	:: modules in use:
 	com.fasterxml.jackson.core#jackson-core;2.10.1 from central in [default]
 	com.google.code.findbugs#jsr305;3.0.2 from local-m2-cache in [default]
@@ -429,9 +525,9 @@ it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
 	---------------------------------------------------------------------
 	|      default     |   89  |   0   |   0   |   2   ||   87  |   0   |
 	---------------------------------------------------------------------
-:: retrieving :: org.apache.spark#spark-submit-parent-1c4d101a-3e82-47fc-9b5e-18fccd5a8c2b
+:: retrieving :: org.apache.spark#spark-submit-parent-4adafba3-f989-42a2-824c-11936cba3cce
 	confs: [default]
-	0 artifacts copied, 87 already retrieved (0kB/16ms)
+	0 artifacts copied, 87 already retrieved (0kB/13ms)
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
 
@@ -441,4 +537,6 @@ To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLeve
 Java HotSpot(TM) 64-Bit Server VM warning: CodeCache is full. Compiler has been disabled.
 Java HotSpot(TM) 64-Bit Server VM warning: Try increasing the code cache size using -XX:ReservedCodeCacheSize=
 
-[Stage 1:=================>                                        (3 + 7) / 10]
+[Stage 1:=======================>                                  (4 + 6) / 10]
+
+[Stage 2:>                                                         (0 + 8) / 10]

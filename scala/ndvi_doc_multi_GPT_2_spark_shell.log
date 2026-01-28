@@ -1,188 +1,13 @@
-26/01/28 09:26:34 WARN Utils: Your hostname, Clockoranges-MacBook-Air.local resolves to a loopback address: 127.0.0.1; using 192.168.68.61 instead (on interface en0)
-26/01/28 09:26:34 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/01/28 09:39:17 WARN Utils: Your hostname, Clockoranges-MacBook-Air.local resolves to a loopback address: 127.0.0.1; using 192.168.68.61 instead (on interface en0)
+26/01/28 09:39:17 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
 :: loading settings :: url = jar:file:/Users/clockorangezoe/Documents/EnvUtilities/spark-3.3.1-bin-hadoop3/jars/ivy-2.5.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
-26/01/28 09:26:35 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/01/28 09:39:19 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 Spark context Web UI available at http://192.168.68.61:4040
-Spark context available as 'sc' (master = local[*], app id = local-1769621199007).
+Spark context available as 'sc' (master = local[*], app id = local-1769621962435).
 Spark session available as 'spark'.
-CodeCache: size=131072Kb used=46573Kb max_used=46582Kb free=84498Kb
- bounds [0x0000000106be4000, 0x0000000109994000, 0x000000010ebe4000]
- total_blobs=13788 nmethods=12838 adapters=859
- compilation: disabled (not enough contiguous free space left)
-26/01/28 09:26:44 ERROR Executor: Exception in task 6.0 in stage 6.0 (TID 36)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:26:44 ERROR Executor: Exception in task 0.0 in stage 6.0 (TID 30)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:26:44 ERROR Executor: Exception in task 3.0 in stage 6.0 (TID 33)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:26:44 ERROR Executor: Exception in task 5.0 in stage 6.0 (TID 35)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:26:44 ERROR Executor: Exception in task 4.0 in stage 6.0 (TID 34)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:26:44 WARN TaskSetManager: Lost task 4.0 in stage 6.0 (TID 34) (192.168.68.61 executor driver): org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-
-26/01/28 09:26:44 ERROR TaskSetManager: Task 4 in stage 6.0 failed 1 times; aborting job
-26/01/28 09:26:44 ERROR Executor: Exception in task 7.0 in stage 6.0 (TID 37)
-org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-26/01/28 09:26:44 WARN TaskSetManager: Lost task 8.0 in stage 6.0 (TID 38) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
-26/01/28 09:26:44 WARN TaskSetManager: Lost task 9.0 in stage 6.0 (TID 39) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
-26/01/28 09:26:44 WARN TaskSetManager: Lost task 2.0 in stage 6.0 (TID 32) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
-26/01/28 09:26:44 WARN TaskSetManager: Lost task 1.0 in stage 6.0 (TID 31) (192.168.68.61 executor driver): TaskKilled (Stage cancelled)
-org.apache.spark.SparkException: Job aborted due to stage failure: Task 4 in stage 6.0 failed 1 times, most recent failure: Lost task 4.0 in stage 6.0 (TID 34) (192.168.68.61 executor driver): org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-	at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-	at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-	at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-	at org.apache.spark.scheduler.Task.run(Task.scala:136)
-	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:750)
-
-Driver stacktrace:
-  at org.apache.spark.scheduler.DAGScheduler.failJobAndIndependentStages(DAGScheduler.scala:2672)
-  at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2(DAGScheduler.scala:2608)
-  at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2$adapted(DAGScheduler.scala:2607)
-  at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
-  at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
-  at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
-  at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:2607)
-  at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1(DAGScheduler.scala:1182)
-  at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1$adapted(DAGScheduler.scala:1182)
-  at scala.Option.foreach(Option.scala:407)
-  at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:1182)
-  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:2860)
-  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2802)
-  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2791)
-  at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:49)
-  at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:952)
-  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2228)
-  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2249)
-  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2281)
-  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.saveAsGeoTiffCompatibilityMode(GeoTiffWriter.scala:306)
-  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.saveAsGeoTiff(GeoTiffWriter.scala:544)
-  at edu.ucr.cs.bdlab.raptor.RaptorMixin$RaptorMixinOperations3.saveAsGeoTiff(RaptorMixin.scala:114)
-  at ComputeNdvi$.run(runs/ndvi_eval/ndvi_doc_multi_GPT_2.scala:81)
-  at ComputeNdvi$.run(runs/ndvi_eval/ndvi_doc_multi_GPT_2.scala:31)
-  ... 60 elided
-Caused by: org.apache.hadoop.fs.ParentNotDirectoryException: Parent path is not a directory: file:/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/output/ndvi.tif
-  at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:691)
-  at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-  at org.apache.hadoop.fs.RawLocalFileSystem.mkdirsWithOptionalPermission(RawLocalFileSystem.java:699)
-  at org.apache.hadoop.fs.RawLocalFileSystem.mkdirs(RawLocalFileSystem.java:672)
-  at org.apache.hadoop.fs.ChecksumFileSystem.mkdirs(ChecksumFileSystem.java:788)
-  at edu.ucr.cs.bdlab.raptor.GeoTiffWriter$.$anonfun$saveAsGeoTiffCompatibilityMode$1(GeoTiffWriter.scala:311)
-  at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:90)
-  at org.apache.spark.scheduler.Task.run(Task.scala:136)
-  at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$3(Executor.scala:548)
-  at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1504)
-  at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:551)
-  at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-  at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-  at java.lang.Thread.run(Thread.java:750)
+runs/ndvi_eval/ndvi_doc_multi_GPT_2.scala:72: error: wrong number of type parameters for method mapPixels: [U](f: Array[Int] => U)(implicit evidence$3: scala.reflect.ClassTag[U], implicit t: scala.reflect.ClassTag[Array[Int]])edu.ucr.cs.bdlab.beast.cg.SpatialDataTypes.RasterRDD[U]
+    val ndvi: RasterRDD[Float] = stacked.mapPixels[Array[Int], Float]((px: Array[Int]) => {
+                                                  ^
 Welcome to
       ____              __
      / __/__  ___ _____/ /__
@@ -213,7 +38,7 @@ org.geotools#gt-epsg-hsql added as a dependency
 org.geotools#gt-geotiff added as a dependency
 org.geotools#gt-coverage added as a dependency
 it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
-:: resolving dependencies :: org.apache.spark#spark-submit-parent-8a29961f-6b08-441b-b082-681065159097;1.0
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-d8f976a4-5f63-402c-94dc-3a0d6f455541;1.0
 	confs: [default]
 	found org.locationtech.jts#jts-core;1.19.0 in local-m2-cache
 	found org.geotools#gt-referencing;24.1 in repo-1
@@ -302,7 +127,7 @@ it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
 	found org.jvnet.staxex#stax-ex;1.8 in local-m2-cache
 	found com.sun.xml.fastinfoset#FastInfoset;1.2.15 in local-m2-cache
 	found io.airlift#aircompressor;0.27 in local-m2-cache
-:: resolution report :: resolve 725ms :: artifacts dl 18ms
+:: resolution report :: resolve 828ms :: artifacts dl 16ms
 	:: modules in use:
 	com.fasterxml.jackson.core#jackson-core;2.10.1 from central in [default]
 	com.google.code.findbugs#jsr305;3.0.2 from local-m2-cache in [default]
@@ -400,14 +225,8 @@ it.geosolutions.imageio-ext#imageio-ext-tiff added as a dependency
 	---------------------------------------------------------------------
 	|      default     |   89  |   0   |   0   |   2   ||   87  |   0   |
 	---------------------------------------------------------------------
-:: retrieving :: org.apache.spark#spark-submit-parent-8a29961f-6b08-441b-b082-681065159097
+:: retrieving :: org.apache.spark#spark-submit-parent-d8f976a4-5f63-402c-94dc-3a0d6f455541
 	confs: [default]
-	0 artifacts copied, 87 already retrieved (0kB/18ms)
+	0 artifacts copied, 87 already retrieved (0kB/15ms)
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-
-[Stage 0:>                                                          (0 + 1) / 1]
-
-                                                                                
-Java HotSpot(TM) 64-Bit Server VM warning: CodeCache is full. Compiler has been disabled.
-Java HotSpot(TM) 64-Bit Server VM warning: Try increasing the code cache size using -XX:ReservedCodeCacheSize=
