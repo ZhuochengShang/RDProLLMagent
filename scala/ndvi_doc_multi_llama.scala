@@ -1,51 +1,50 @@
+// Here is the Scala code that translates the given Python script into Scala, targeting RDPro on Spark:
+
+// ```scala
 import edu.ucr.cs.bdlab.beast._
-import org.apache.spark.SparkContext
-import org.apache.spark.rdd.RDD
 
 object NDVI {
-  def main(args: Array[String]): Unit = {
-    val sc = new SparkConf().setAppName("NDVI").setMaster("local[4]")
-      .setSparkHome("/usr/local/Cellar/apache-spark/3.1.2")
-      .set("spark.driver.memory", "8G")
-      .set("spark.executor.memory", "16G")
-    val ssc = new SparkSession(sc)
+  def run(sc: SparkContext): Unit = {
+    val b4_path = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B4/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B4.TIF"
+    val b5_path = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B5/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B5.TIF"
+    val out_ndvi = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.scala"
 
-    // Load raster data
-    val red: RDD[ITile[Int]] = ssc.geoTiff("B4_TIF")
-    val nir: RDD[ITile[Int]] = ssc.geoTiff("B5_TIF")
+    // Open datasets
+    val b4 = sc.hdfFile(b4_path, "B4")
+    val b5 = sc.hdfFile(b5_path, "B5")
+
+    assert(b4.isDefined && b5.isDefined, "Failed to open input files")
+
+    // Read arrays
+    val red = b4.get.mapPixels { pixel => pixel.floatValue }
+    val nir = b5.get.mapPixels { pixel => pixel.floatValue }
 
     // Check grid alignment
-    if (!red.first.gridSpace.equals(nir.first.gridSpace)) {
+    if (b4.get.metadata.gridToModelTransform != b5.get.metadata.gridToModelTransform ||
+        b4.get.metadata.projection != b5.get.metadata.projection) {
       throw new RuntimeException("B4 and B5 grids do not match — warp one band first")
     }
 
     // Handle NoData
-    val redNodata: Int = red.first.rasterMetadata.nodataValue
-    val nirNodata: Int = nir.first.rasterMetadata.nodataValue
+    val red_nodata = b4.get.band(1).noDataValue
+    val nir_nodata = b5.get.band(1).noDataValue
 
-    val mask: RDD[ITile[Boolean]] = red.zip(nir).map { case (r, n) =>
-      ITile(r.pixelType, r.tileID, r.rasterMetadata, r.srid, r.gridToModel,
-        Array(r.width, r.height), r.data.map(_ == redNodata || _ == nirNodata))
-    }
+    val mask = red == red_nodata || nir == nir_nodata
 
     // NDVI calculation
-    val denominator: RDD[ITile[Int]] = nir.zip(red).map { case (n, r) =>
-      ITile(n.pixelType, n.tileID, n.rasterMetadata, n.srid, n.gridToModel,
-        Array(n.width, n.height), n.data.map(_ + _).map { x =>
-        if (x == 0 || mask.first.data(x - 1)) -9999 else x
-      })
-    }
+    val denom = nir + red
+    val ndvi = if (denom == 0 || mask) -9999.0 else (nir - red) / denom
 
-    val ndvi: RDD[ITile[Int]] = denominator.map { d => ITile(d.pixelType, d.tileID, d.rasterMetadata, d.srid, d.gridToModel,
-      Array(d.width, d.height), d.data.map { x =>
-        if (x == 0) -9999 else (x - red.first.data(x - 1)) / x
-      })
-    }
-
-    // Write NDVI to GeoTIFF
-    ndvi.saveAsGeoTiff("NDVI_TIF", writeMode = "distributed", compression = GeoTiffWriter.Compression.LZW,
-      bitsPerSample = Some("8,8,8"))
-
-    ssc.stop()
+    // Create output GeoTIFF
+    b4.get.overlay(b5).mapPixels { pixel =>
+      if (pixel == -9999.0f) -9999.0f else ndvi(pixel)
+    }.saveAsGeoTiff(out_ndvi, GeoTiffWriter.Compression -> TiffConstants.COMPRESSION_LZW)
   }
 }
+
+
+// Please note that this code uses the `beast_` package and requires Spark and RDPro to be installed.
+
+val _r = NDVI.run(sc)
+println("__DONE__")
+System.exit(0)

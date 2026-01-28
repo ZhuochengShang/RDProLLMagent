@@ -351,6 +351,12 @@ traditional GIS software.
 raster.saveAsGeoTiff("temperature_f", GeoTiffWriter.WriteMode -> "distributed")
 raster.saveAsGeoTiff("temperature_f", GeoTiffWriter.WriteMode -> "compatibility")
 ```
+
+Hint: Use Seq to pass multiple options.
+```scala
+raster.saveAsGeoTiff("temperature_f", Seq(GeoTiffWriter.Compression -> TiffConstants.COMPRESSION_LZW GeoTiffWriter.WriteMode -> "compatibility"))
+```
+
 Hint: If you expect a large number of files to be written, e.g., after applying the explode method,
 the distributed writing mode is recommended for more efficiency.
 - Bit compaction: In GeoTIFF, values can be bit-compacted to use as few bits as possible.

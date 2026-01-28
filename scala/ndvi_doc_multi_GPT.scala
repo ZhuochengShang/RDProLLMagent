@@ -1,91 +1,114 @@
-import org.apache.spark.sql.SparkSession
-import org.apache.spark.SparkConf
-import org.apache.spark.SparkContext
-import org.apache.spark.rdd.RDD
 import edu.ucr.cs.bdlab.beast._
+import org.apache.spark.SparkContext
+
 import java.net.URI
-import java.nio.file.{Files, Paths, Path}
+import java.nio.file.Paths
 
-object ComputeNdviRDPro {
-  def main(args: Array[String]): Unit = {
-    val defaultB4 = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B4/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B4.TIF"
-    val defaultB5 = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B5/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B5.TIF"
-    val defaultOut = "ndvi.tif"
-
-    val b4Path = if (args.length >= 1) args(0) else defaultB4
-    val b5Path = if (args.length >= 2) args(1) else defaultB5
-    val outPath = if (args.length >= 3) args(2) else defaultOut
-
-    val spark = SparkSession.builder()
-      .appName("ComputeNdviRDPro")
-      .getOrCreate()
-
-    try {
-      val sc = spark.sparkContext
-
-      // Determine output path locality by URI scheme; create parent directory for local paths
-      val outURI = new URI(outPath)
-      val schemeOpt = Option(outURI.getScheme)
-      val defaultFS = sc.hadoopConfiguration.get("fs.defaultFS", "file")
-      val isLocalOutput = schemeOpt.isEmpty || schemeOpt.contains("file") || (schemeOpt.contains("hdfs") && defaultFS.startsWith("file"))
-      if (isLocalOutput) {
-        val p: Path = if (schemeOpt.isDefined) Paths.get(outURI) else Paths.get(outPath)
-        val parent = p.getParent
-        if (parent != null) Files.createDirectories(parent)
-      }
-
-      // Load input rasters as integer pixels (typical for Landsat surface reflectance)
-      val red: RasterRDD[Int] = sc.geoTiff[Int](b4Path)
-      val nir: RasterRDD[Int] = sc.geoTiff[Int](b5Path)
-
-      // Stack the two rasters; this requires identical metadata (alignment, CRS, resolution, tiling)
-      val stacked: RasterRDD[Array[Int]] =
-        try {
-          red.overlay(nir)
-        } catch {
-          case e: Throwable =>
-            throw new RuntimeException("B4 and B5 grids do not match — warp one band first", e)
-        }
-
-      // Compute NDVI per pixel: (NIR - RED) / (NIR + RED)
-      // Use -9999.0f when denominator is zero. Note: NoData masking is not available via documented APIs.
-      val ndvi: RasterRDD[Float] = stacked.mapPixels((px: Array[Int]) => {
-        val r: Float = px(0).toFloat
-        val n: Float = px(1).toFloat
-        val denom: Float = n + r
-        if (denom == 0.0f) -9999.0f else (n - r) / denom
-      })
-
-      // Write output as a single GeoTIFF with LZW compression (compatibility mode)
-      ndvi.saveAsGeoTiff(
-        outPath,
-        Seq(GeoTiffWriter.Compression -> TiffConstants.COMPRESSION_LZW,
-        GeoTiffWriter.WriteMode -> "compatibility")
-      )
-
-      println(s"NDVI written to: $outPath")
-    } finally {
-      spark.stop()
+object NDVI {
+  // Normalize a single path per the required rules
+  private def normalizePath(sc: SparkContext, path: String): String = {
+    if (path == null || path.trim.isEmpty) return path
+    val trimmed = path.trim
+    val hasScheme = try {
+      val u = new URI(trimmed)
+      u.getScheme != null
+    } catch {
+      case _: Exception => false
     }
+    if (hasScheme) {
+      trimmed
+    } else {
+      val isLocal = sc.master != null && sc.master.toLowerCase.startsWith("local")
+      val looksLikeLocalAbsolute =
+        trimmed.startsWith("/") || trimmed.matches("^[a-zA-Z]:[\\\\/].*")
+      if (isLocal && looksLikeLocalAbsolute) {
+        Paths.get(trimmed).toAbsolutePath.toUri.toString
+      } else {
+        trimmed
+      }
+    }
+  }
+
+  def run(sc: SparkContext): Unit = {
+    // Defaults derived from the provided Python (absolute paths keep behavior deterministic in local mode)
+    val defaultB4 =
+      "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B4/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B4.TIF"
+    val defaultB5 =
+      "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B5/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B5.TIF"
+    val defaultOut =
+      "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py"
+
+    // Read args from SparkConf (safe override), otherwise use defaults
+    // You can pass them via --conf rdpro.b4=..., --conf rdpro.b5=..., --conf rdpro.out=...
+    val b4In = sc.getConf.get("rdpro.b4", defaultB4)
+    val b5In = sc.getConf.get("rdpro.b5", defaultB5)
+    val outPath = sc.getConf.get("rdpro.out", defaultOut)
+
+    // Mandatory path normalization before any IO
+    val b4Path = normalizePath(sc, b4In)
+    val b5Path = normalizePath(sc, b5In)
+    val outUri = normalizePath(sc, outPath)
+
+    // Load input rasters (assume integer pixels as typical for Landsat SR; will be cast to Float for math)
+    val red: RasterRDD[Int] = sc.geoTiff[Int](b4Path)
+    val nir: RasterRDD[Int] = sc.geoTiff[Int](b5Path)
+
+    // Validate alignment/metadata equality (fail fast if mismatch)
+    val redMD = red.first.rasterMetadata
+    val nirMD = nir.first.rasterMetadata
+    val aligned =
+      redMD.x1 == nirMD.x1 &&
+      redMD.y1 == nirMD.y1 &&
+      redMD.x2 == nirMD.x2 &&
+      redMD.y2 == nirMD.y2 &&
+      redMD.tileWidth == nirMD.tileWidth &&
+      redMD.tileHeight == nirMD.tileHeight &&
+      redMD.srid == nirMD.srid &&
+      redMD.g2m == nirMD.g2m
+
+    if (!aligned) {
+      throw new RuntimeException("B4 and B5 grids do not match — warp one band first")
+    }
+
+    // Stack bands and compute NDVI = (NIR - Red) / (NIR + Red)
+    val stacked: RasterRDD[Array[Int]] = red.overlay(nir)
+    val ndvi: RasterRDD[Float] = stacked.mapPixels((px: Array[Int]) => {
+      val r: Float = px(0).toFloat
+      val n: Float = px(1).toFloat
+      val denom: Float = n + r
+      if (denom == 0.0f) -9999.0f else (n - r) / denom
+    })
+
+    // Write GeoTIFF with LZW compression; use single-file compatibility mode (closest to GDAL Create)
+    ndvi.saveAsGeoTiff(
+      outUri,
+      GeoTiffWriter.Compression -> TiffConstants.COMPRESSION_LZW,
+      GeoTiffWriter.WriteMode -> "compatibility"
+    )
+
+    println(s"NDVI written to: $outUri")
   }
 }
 
 // NOTES
 // (a) RDPro APIs used:
-// - sc.geoTiff[Int]
+// - sc.geoTiff
+// - RasterRDD (alias)
 // - overlay
 // - mapPixels
 // - saveAsGeoTiff
-// - GeoTiffWriter.Compression
-// - GeoTiffWriter.WriteMode
 
 // (b) Unsupported operations and why:
-// - Reading per-band NoData values and creating masks accordingly: No API in provided docs to read band NoData from input rasters, so exact masking semantics from the Python (masking when red or nir equals their NoData) cannot be replicated. The code only masks denom == 0.
-// - Setting NoData tag in output GeoTIFF: No documented API to set a NoData value in the output; the raster writes numeric -9999.0f where masked, but does not set the GeoTIFF NoData metadata.
-// - Explicit alignment/CRS/transform checking: No documented API to fetch RasterMetadata on the driver for comparison. The code relies on overlay’s requirement and throws a clear error if overlay fails, matching the Python’s fail-fast behavior.
+// - Reading NoData metadata and masking it: No API is documented to access band NoData values or carry masks, so nodata-based masking from the Python script could not be replicated. Only the denominator-zero guard is implemented.
+// - Setting output NoData tag: No documented API to set NoData for the written GeoTIFF, so the output contains -9999.0 values but without a NoData tag.
+// - Reprojection/warping/resampling: Not available in the provided docs. The code fails fast with a clear error if rasters are not aligned (same metadata).
 
 // (c) Assumptions about IO paths / bands / nodata / CRS / environment detection logic:
-// - Inputs are single-band GeoTIFFs with integer pixels (typical for Landsat SR). If inputs are Float GeoTIFFs, adjust the type parameter to Float.
-// - Overlay is called in the order (red, nir), so stacked pixel arrays are [red, nir].
-// - Alignment: If rasters are not aligned (different metadata), overlay will fail; we catch and rethrow with a clear message: “B4 and B5 grids do not match — warp one band first.”
-// - Output path handling: We infer locality from URI scheme; for local paths (no scheme or file:), we create parent directories. For distributed schemes (e.g., hdfs://), path is passed as-is to saveAsGeoTiff. WriteMode is set to “compatibility” to produce a single GeoTIFF similar to the Python output.
+// - Inputs are single-band GeoTIFFs with integer pixels (typical of Landsat SR). Pixels are cast to Float for NDVI computation.
+// - Path normalization follows the mandatory rules: if sc.master starts with "local" and a path is an absolute local path without a scheme, it is converted to file:///...; otherwise, scheme-less paths are left unchanged to resolve via cluster fs.defaultFS.
+// - SaveAsGeoTiff uses "compatibility" mode to write a single file (closest to the GDAL Create behavior in the Python).
+// - CLI parameters are read from SparkConf keys rdpro.b4, rdpro.b5, and rdpro.out with safe defaults derived from the Python. Since run(sc: SparkContext) is mandated, SparkConf is used in place of direct argv parsing.
+
+val _r = NDVI.run(sc)
+println("__DONE__")
+System.exit(0)
