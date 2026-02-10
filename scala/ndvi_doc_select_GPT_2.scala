@@ -38,7 +38,7 @@ object ComputeNDVI {
     // Safe defaults (from the provided Python); can be overridden by system properties
     val defaultRed = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B4/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B4.TIF"
     val defaultNir = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B5/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B5.TIF"
-    val defaultOut = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py"
+    val defaultOut = "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.tif"
 
     val redPathRaw = sys.props.getOrElse("ndvi.red", defaultRed)
     val nirPathRaw = sys.props.getOrElse("ndvi.nir", defaultNir)

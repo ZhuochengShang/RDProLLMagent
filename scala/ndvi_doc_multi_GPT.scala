@@ -36,7 +36,7 @@ object NDVI {
     val defaultB5 =
       "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/data/landsat8/LA/B5/LC08_L2SP_040037_20250827_20250903_02_T1_SR_B5.TIF"
     val defaultOut =
-      "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.py"
+      "/Users/clockorangezoe/Documents/phd_projects/code/geoAI/RDProLLMagent/python/ndvi.tif"
 
     // Read args from SparkConf (safe override), otherwise use defaults
     // You can pass them via --conf rdpro.b4=..., --conf rdpro.b5=..., --conf rdpro.out=...
